@@ -1,132 +1,174 @@
 # Look recipes
 
-These are the exact values behind the grade. They are written as CSS because CSS is the most direct way to describe them. Port them to whatever renderer you use. `ACCENT` is the product's single brand colour, used in every highlight. The examples use a warm red-orange (`oklch(0.66 0.21 28)`). Swap in the product's own accent, and shift the warm light's hue to match it.
+These are the exact values behind the look. They are written as CSS where CSS is the most direct way to describe them. Port them to whatever renderer you use. Pixel values assume a 1920 × 1080 frame; scale them with the frame height.
 
 ## Stage
 
 ```css
-background: #060607;            /* ink: never #000, never a wallpaper */
+background: #000;               /* a true black void: no wallpaper, no haze, no floor */
 ```
 
-## Key light (a warm pool from above)
+The product's own dark chrome is the only surface. Everything that is not UI is black.
 
-A full-frame layer above the product:
+## Camera
+
+Put the UI on one plane inside a perspective camera. Rotate in-plane first, then tilt, then yaw. In CSS, transforms apply right to left, so the order below does exactly that:
 
 ```css
-background: radial-gradient(70% 60% at 50% -10%, oklch(0.55 0.14 30 / 0.12), transparent 70%);
-mix-blend-mode: screen;
+.camera { perspective: 1300px; perspective-origin: 50% 50%; }
+
+.plane {
+  transform-origin: var(--fx) var(--fy);   /* the focal point, in UI pixels */
+  transform:
+    translate3d(var(--tx), var(--ty), 0)   /* drift: animated */
+    rotateX(var(--pitch))                  /* tilt back: 30–50deg */
+    rotateY(var(--yaw))                    /* ±5–15deg */
+    rotateZ(var(--roll))                   /* in-plane: ±10–20deg, sign flips per shot */
+    scale(var(--mag));                     /* magnification at the focal point */
+}
 ```
 
-Use 0.12–0.16 alpha in the montage and about 0.08 behind the outro. You can move the light (for example `30% 0%`) for a shot on a separate surface, but keep the hue.
+| Shot | `--mag` | `--pitch` | `--roll` | `--yaw` | Perspective |
+|---|---|---|---|---|---|
+| Extreme macro | 5–7 | 35–50° | ±12–20° | ±5–15° | 1100–1300 px |
+| Macro | 2.5–4 | 30–45° | ±10–18° | ±5–12° | 1200–1400 px |
+| Medium | 1.5–2.5 | 25–40° | ±8–15° | ±5–10° | 1300–1500 px |
+| Wide (payoff only) | 0.8–1.1 | 8–12° | 0° | ±0–3° | 1800–2200 px |
 
-## Vignette
+Check the result: in-focus text should read diagonally, and near text should be about 1.4–1.8× the size of far text. If the frame looks like a flat screenshot, increase pitch before anything else.
 
-```css
-background: radial-gradient(110% 85% at 50% 50%, transparent 45%, rgb(0 0 0 / 0.55) 100%);
-```
+### Drift
 
-## Glass (the product window)
+Interpolate the translate, a small scale change, and a small angle change across the shot:
 
-```css
-border-radius: 16px;            /* 20–24px for a standalone card on its own set */
-background: <the app's dark chrome>;
-box-shadow:
-  inset 0 0 0 1px oklch(1 0 0 / 0.09),     /* hairline edge */
-  inset 0 1px 0 oklch(1 0 0 / 0.12),       /* top highlight */
-  0 60px 120px -30px rgb(0 0 0 / 0.8);     /* deep, soft lift */
-```
+| Move | Amount over the shot |
+|---|---|
+| Track along the action | 3–10% of frame width; up to 20–35% for a long pan along a diff or document |
+| Push | 1–5% scale |
+| Turn | 0.5–4° of roll or yaw |
 
-A document or canvas inside it sits on its own shadow:
-
-```css
-box-shadow: 0 0 0 1px rgb(0 0 0 / 0.4), 0 20px 60px -10px rgb(0 0 0 / 0.6);
-```
-
-## Anamorphic flare (on every event)
-
-The flare is drawn in screen space at the event's projected position. It has two layers, both using the screen blend:
-
-```css
-/* streak: 1800 × 6 px, centred on the event */
-border-radius: 50%;
-background: radial-gradient(50% 50% at 50% 50%, rgb(255 255 255 / 0.95), ACCENT 18%, transparent 70%);
-filter: blur(2px);
-
-/* core: 360 × 360 px */
-border-radius: 50%;
-background: radial-gradient(closest-side, rgb(255 255 255 / 0.55), ACCENT 30%, transparent 100%);
-```
-
-The strength is an impulse that decays over about 0.4 s. Peak values: streak opacity 0.55 and core 0.45 for a UI event. Scale the streak's width to 0.6 and the core to 0.45. For a resolve, use up to 0.7 strength with width 0.8. When events overlap, the strongest one wins. Never show two flares at once.
+Use linear interpolation, or an ease-out over the first third that hands off to a slow, constant drift. Never ease to zero velocity before the cut.
 
 ## Depth of field
 
-Apply the blur to the layer *behind* the subject (the document or canvas), never to the subject:
-
-| Shot | Background blur |
-|---|---|
-| Macro on a floating element (composer card, pill, switcher) | 2.5–3 px |
-| Macro on a side panel, with the main canvas behind | 4 px |
-| Medium shot where the action happens on the canvas itself | 0 |
-
-## Content change (a blur dissolve)
+This is optical depth of field, not a blurred background layer. Blur depends on each point's depth relative to the focal plane, so it grows continuously toward both the near and the far edge of the tilted UI.
 
 ```
-old: opacity 1 → 0,  blur 0 → 14px,  translateY 0 → −20px
-new: opacity 0 → 1,  blur 14px → 0,  translateY 24px → 0
+depth(p)    = z of plane point p after the camera transform
+blur(p)     = min(maxBlur, k * |depth(p) - depth(focus)|)
 ```
 
-Run it on an ease-in-out of 0.6–0.9 s. Bars or numbers interpolate their value over the same span. A colour change, such as grey text turning to the accent, mixes in oklch.
+| Shot | Sharp band (share of frame height) | Near-edge blur | Far-edge blur | `maxBlur` |
+|---|---|---|---|---|
+| Extreme macro | 4–8% | 10–16 px | 16–24 px | 24 px |
+| Macro | 8–15% | 6–12 px | 12–20 px | 20 px |
+| Medium | 15–30% | 4–8 px | 8–14 px | 14 px |
+| Wide | 50–70% | 0–3 px | 3–6 px | 6 px |
 
-## Resolve ring
+**Implementation in a DOM stack**: depth is linear across the plane, so you can approximate it with 6–8 stacked copies of the plane, each with a stronger `filter: blur()`, each masked to a band at a greater distance from the focal line with `mask-image: linear-gradient(...)` on the plane itself. Point the gradient along the plane's depth direction, which you get by applying the inverse rotation to the camera's z-axis. Feather each band by about a third of its width so no seams show.
+
+**Rack focus**: animate `depth(focus)` (the focal line's position on the plane) over 0.4–0.8 s on an ease-in-out when attention moves.
+
+**Bokeh brightness**: out-of-focus bright text should spread and dim, not glow. Lower its opacity to about 0.6–0.8× as it blurs.
+
+## Subject light
+
+A neutral pool that follows the subject's projected screen position, not the frame centre. Put it over the plane as a darkening layer:
 
 ```css
-width: 60px; height: 60px; border-radius: 50%;
-border: 2px solid ACCENT;
+background: radial-gradient(
+  ellipse 46% 58% at var(--sx) var(--sy),  /* the projected focal point */
+  transparent 0%,
+  rgb(0 0 0 / 0.35) 45%,
+  rgb(0 0 0 / 0.85) 80%,
+  #000 100%
+);
 ```
 
-Scale it from 0.4 to 3.4 on an ease-out expo over 0.8 s. Opacity goes from 0.8 to 0, linearly.
+Then add a frame vignette to keep the corners black:
 
-## Springs and timing
+```css
+background: radial-gradient(120% 95% at 50% 50%, transparent 50%, rgb(0 0 0 / 0.7) 100%);
+```
 
-- Pop in: a spring with stiffness about 260, damping about 19, and a slight overshoot.
-- A UI ease-out of about 0.3 s for panels and cards.
-- Cursor moves take 0.4–0.9 s on a slight arc (a bend of about 0.1).
-- Typing runs at 12–14 cps. The caret blinks at about 1.6 Hz while idle and stays solid while typing.
+No colour goes into either layer.
+
+## Grade
+
+| Target | Value |
+|---|---|
+| Black | True black (#000) outside the UI |
+| Average frame luminance | 4–10% (most shots about 6–8%) |
+| In-focus primary text | about 85–90% white, never clipped |
+| Secondary text | 45–60% white |
+| Colour | Only the product's own: status icons, diff green and red, a brand-coloured button. Neutral everywhere else. |
+
+The product slab keeps its real chrome. Add only a faint edge to separate panels from the void:
+
+```css
+border-radius: 14px;
+box-shadow:
+  inset 0 0 0 1px oklch(1 0 0 / 0.06),     /* hairline edge */
+  inset 0 1px 0 oklch(1 0 0 / 0.08);       /* faint top highlight */
+```
+
+## Streaming reveal (stipple dissolve)
+
+Generated text, icons, and avatars resolve line by line out of a fine stipple of dots:
+
+```
+noise(x, y) = hash of the 2 × 2 px cell containing (x, y), in [0, 1)
+p(t)        = easeOutCubic(clamp((t - lineStart) / 0.5, 0, 1))
+visible     = glyph pixel AND noise(x, y) < p(t)
+```
+
+- While `p < 1`, draw the visible dots 10–15% brighter, and add a 1–1.5 px blur that falls to 0 at `p = 1`.
+- Stagger lines by about 0.1 s, top to bottom. Start each line slightly before the previous one finishes.
+- Rows that hold icons resolve the icon and the text together.
+
+## Other motion
+
+| Event | Recipe |
+|---|---|
+| Typing | 12–13 cps; a solid caret while typing, blinking at about 1.6 Hz while idle. Identifiers and file names become inline chips once the token is complete. |
+| Send | The composer text clears; the message appears in the thread with the Appear recipe. |
+| Appear | `opacity 0 → 1`, `translateY 12px → 0`, `blur 6px → 0` over 0.35 s on `cubic-bezier(0.22, 1, 0.36, 1)`. No overshoot. |
+| Select (tab, nav item) | The selection pill or highlight slides to the new item over 0.35 s on an ease-in-out. The new label brightens from 55% to 90% white. |
+| Press (button) | Scale to 0.97 over 0.08 s and back over 0.2 s; the button's own pressed colour shows briefly. |
+| Line select (code) | A gutter control fades in on the line, then the line's highlight fills over 0.25 s. |
+| Document writing | Headings, then paragraphs, then table rows, each with the stipple reveal. |
+| Diagram drawing | Nodes appear, then connectors draw on with a `stroke-dashoffset` over 0.4–0.6 s, then labels stipple in. |
+| Scrolling | 120–250 px/s of UI at native scale, ease-in-out at the start and end. |
+
+## Leaving the last UI shot
+
+Either hard-cut to black, or over 0.4 s: `blur 0 → 12px` and `brightness 1 → 0`.
 
 ## Outro type
 
 ```css
-/* one line, centred */
-font: 600 66px/1.2 <the product's sans>;
-letter-spacing: -0.035em;
-
-/* feature name: bright gradient text */
-background: linear-gradient(180deg, #ffffff 20%, rgb(255 255 255 / 0.62) 100%);
--webkit-background-clip: text; background-clip: text; color: transparent;
-
-/* tagline */
-color: rgb(255 255 255 / 0.5);
+/* one line, centred on black */
+font: 500 90px/1.2 <the product's sans>;
+letter-spacing: -0.02em;
+color: rgb(255 255 255 / 0.95);
 ```
 
-Words enter one at a time: blur 14 px → 0, translateY 16 px → 0, and opacity 0 → 1, over 0.9 s on an ease-out expo, staggered by 0.07 s.
+Enter over 0.8 s on an ease-out: `filter: blur(16px) → blur(0)` and `opacity 0 → 1`. An optional soft glow, `text-shadow: 0 0 40px rgb(255 255 255 / 0.3)`, fades to 0 as the type sharpens.
 
-## Logo lockup
+A quieter alternative is to fade the colour from 35% to 95% white over 1.2 s, with no blur.
 
-The mark is about 168 px, with a 40 px gap to the wordmark. The wordmark is about 132 px, weight 700, tracking −0.05em, with the same gradient fill as the feature name. Put a faint bloom behind it:
+For the name-then-tagline variant, set the name, hold it for about 1.5 s, then fade in the tagline after it on the same line over 0.6 s while the whole line slides to re-centre on an ease-in-out.
 
-```css
-background: radial-gradient(46% 42% at 50% 50%, oklch(0.3 0.06 35 / 0.35), transparent 72%);
-```
+## Logo
 
-It does not move. Fade the whole frame to black over the last 1.5–2 s.
+Use the mark alone, or the mark with the wordmark. The mark is about 115 px tall, the gap to the wordmark about 0.4× the mark height, and the wordmark the size of the outro type. Plain white, with no bloom and no glow. Cut or dissolve (0.3 s) to it, hold it completely still for 4–5 s, and end the film on it.
 
 ## Render
 
 | Setting | Value |
 |---|---|
-| Resolution | 1920 × 1080; 3840 × 2160 for a master |
+| Resolution | 1920 × 1080 (or 1920 × 960 for a 2:1 widescreen cut); a 2× master for delivery |
 | Frame rate | 60 fps |
-| Motion blur | 4 sub-frames per frame, 0.5 shutter (180°) |
-| Grain | Light temporal luma noise (strength about 3 on ffmpeg's `noise` filter) |
-| Legibility | Nothing below about 20 px of on-screen text at 1080p. Check it at 960 × 540. |
+| Motion blur | 4+ sub-frames per frame, 0.5 shutter (180°) |
+| Grain | Fine temporal luma noise (strength about 4 on ffmpeg's `noise` filter), applied after the grade |
+| Legibility | Text in focus is at least 24 px tall on screen at 1080p. Check it at 960 × 540. |

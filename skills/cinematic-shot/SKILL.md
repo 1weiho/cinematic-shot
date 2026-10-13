@@ -1,102 +1,116 @@
 ---
 name: cinematic-shot
-description: Shoot software UI like a film. A montage of hero shots, each a tight, near-frontal macro crop of the interface with a slow linear camera drift and shallow depth of field, hard-cut on the beat inside one dark, warmly lit room, ending on a line of copy and a still logo. Use when asked for a launch video, product film, feature trailer, teaser, promo clip, hero shot, or any "cinematic" footage of an app or UI. This skill covers camera, framing, light, and edit. It is stack-agnostic.
+description: Shoot software UI like a film. A sequence of hero shots, each a steep, oblique, extreme close-up of the interface floating in black, with a razor-thin focal plane, a slow motivated camera drift, and UI that acts on its own, hard-cut on the action, ending on one line of copy and a still logo. Use when asked for a launch video, product film, feature trailer, teaser, promo clip, hero shot, or any "cinematic" footage of an app or UI. This skill covers camera, framing, light, and edit. It is stack-agnostic.
 ---
 
 # Cinematic shot
 
-You are the director and the DP, not the motion designer. The film is a sequence of **hero shots**. Each one is a tight, almost frontal crop of the product's UI. The camera drifts slowly, one thing happens, and a hard cut on the beat brings the next shot. Nothing explains itself with captions. The UI does the talking.
+You are the director and the DP, not the motion designer. The film is a sequence of **hero shots**. Each one looks at a real piece of the product's UI from a steep, low angle, so close that the focal plane covers only a line or two of text and everything else melts into black. The camera drifts slowly toward where the next thing will happen. The UI does the work by itself: things get typed, streamed, selected, and written while we watch. Nothing explains itself with captions.
 
 This skill is about camera, framing, light, and the edit. Build the film with any rendering stack. Whatever you choose, make every frame a pure function of time, so the film renders deterministically and can take motion blur.
 
-Read [references/look.md](references/look.md) for exact grade, glass, flare, depth-of-field, and type recipes. Read [references/shot-list-example.md](references/shot-list-example.md) for a full example of the shot grammar.
+Read [references/look.md](references/look.md) for exact camera, depth-of-field, light, reveal, and type recipes. Read [references/shot-list-example.md](references/shot-list-example.md) for a full example of the shot grammar.
 
 ## The taste
 
-Dark room. One warm light from above. The product floats in it like a sheet of glass. The camera is close, closer than feels comfortable, so a single control, a single card, or a single line of text fills the frame. It never sits still and never moves much: a slow push of about 10%, with a degree or two of turn. Cuts land on a steady beat grid, even though there is no music. Each shot holds exactly one gesture, and its result stays up for a beat. One accent colour carries every highlight. Restraint everywhere else.
+A black void. The product floats in it like a dark slab, tilted away from the camera, lit by a soft pool that follows whatever matters and lets everything else fall into black. The camera is low and close, looking *along* the UI rather than at it, so lines of text run diagonally across the frame and shrink into the distance. The focal plane is a thin band: one control, one line of typing, one row of a list is sharp, and the rest is soft bokeh. The camera never stops drifting and never moves fast. Shots are long enough to watch something happen. The only colour is the product's own. Restraint everywhere else.
 
 ## 1. Find the story before the shots
 
 Before planning a single camera, write down:
 
-- **The gesture**: the 3–6 things the user physically does. Examples: flip a toggle, hover, type, drag, confirm, run a command.
-- **The payoff**: the one moment where the product visibly changes something. The film exists to reach this frame.
-- **The demo content**: concrete, believable data inside the UI, such as names, numbers, and short human-sounding text. The content should carry its own before/after, so the audience can *see* that the result is better without being told. A rambling sentence becomes a sharp one. A grey placeholder becomes a solid accent-coloured value.
-- **One line of copy**: the feature name, then a tagline of five words or fewer.
+- **The flow**: the 4–7 things that happen on screen, in order. Examples: open a view, select a tab, type a prompt, watch the answer stream in, watch a document write itself, approve.
+- **The payoff**: the one moment where the product visibly does something remarkable. The film exists to reach this frame.
+- **The demo content**: concrete, believable data inside the UI, such as names, IDs, statuses, code, and short human-sounding text. Real-looking density is what makes a close-up beautiful. A list of twelve plausible issues reads as a product; three grey placeholders read as a mockup.
+- **One line of copy**: the product or feature name, then a tagline of five words or fewer.
 
 ## 2. Write the shot list
 
 Post the shot list before building, then keep going:
 
-| # | Cut at | Subject (what fills frame) | Scale | Action | Drift | Focus |
-|---|---|---|---|---|---|---|
+| # | Cut at | Len | Subject (what is in focus) | Scale | Angle | Move | Action |
+|---|---|---|---|---|---|---|---|
 
 Rules:
 
-- **Length**: 30–45 s at about 120 BPM (beat 0.5 s, bar 2 s). Montage shots last **2–3 s** (4–6 beats). A shot with typing can run to 4 s, but no single setup runs longer.
-- **One idea per shot.** If two things happen, it is two shots.
-- **Cut on the beat, and cut big moments on the bar.** The cut comes *before* the action. Let the shot settle for 0.3–1 s, perform the gesture, hold the result for about a beat, then cut.
-- **Vary scale like an editor.** Macro dominates, and medium shots rarely come back to back. Save the only wide shot for the payoff, where it lands like a release.
-- **Alternate the angle.** Flip the sign of yaw (or pitch) often, and always between two shots of similar scale. Every cut should read as a new camera position, not a jump. If you return to the same subject, change both scale and angle.
-- **No continuity.** The cursor can be anywhere when a shot opens. Start it already moving, slightly off target, as if the action began before we cut in.
-- **Separate sets for separate places.** When the story moves to another surface (a terminal, a phone, a second app), give it its own card in the same dark room and its own light position, then hard-cut to it. Do not use a transition.
+- **Length**: 45–55 s in all, with 8–10 UI shots, then the copy and the logo.
+- **Shot length follows the action.** Process shots (typing, streaming, a document writing itself, a long diff) run **5–9 s**. Punctuation shots (a tab, a button, a nav item) run **2–3.5 s**. Alternate the two, so a long watch is followed by a short accent. Median about 5 s.
+- **Cut on the action, not on a metronome.** There is no beat grid. Cut in when the subject is already in frame or about to arrive; the action starts within 0.3–0.8 s; hold the result for 0.5–1 s; cut while the camera is still moving.
+- **One idea per shot.** A shot can contain a short chain (type → send → the reply starts) only if the camera follows one continuous thread.
+- **Vary scale like an editor.** Extreme macros and macros dominate. Medium shots carry the longer process. Hold back the **wide shot** (the whole window, near-frontal) for the payoff, where it lands like a release. Return to a close-up after it.
+- **Alternate the diagonal.** If the text in one shot rises to the right, the next shot's text falls to the right, or the plane tilts the other way. Every cut should read as a new camera position.
+- **No continuity cursor.** The UI acts on its own (see section 4). The viewer never needs to follow a pointer between shots.
+- **Separate surfaces get separate setups.** When the story moves to another surface (a terminal, a phone, another app), give it its own slab in the same black void and hard-cut to it.
 
 ### Shot scales
 
-Measure scale as magnification of the UI relative to its native size:
+Measure scale as magnification of the UI at the focal point, relative to its native size:
 
 | Scale | Magnification | Use for | Depth of field |
 |---|---|---|---|
-| Macro | 2.5–4× | A single control, a badge, a floating card, a line of typing | Blur the layer behind the subject by 2.5–4 px |
-| Medium | 1.5–2.2× | A gesture that covers an area: hovering a block, dragging a region, a column of items | Sharp when the action is on the plane itself; 2–4 px when the subject floats above it |
-| Wide | 1.1–1.2× | The payoff only, where many things change at once | Sharp |
+| Extreme macro | 5–7× | A single tab, a button, a nav item, a status badge. One or two words fill a third of the frame. | Only the subject is sharp. Everything else is heavy bokeh. |
+| Macro | 2.5–4× | A composer with a line of typing, a few rows of a list, a code hunk | A band 2–4 text lines deep is sharp |
+| Medium | 1.5–2.5× | A panel at work: a list streaming in, a document writing itself, a diff with a sidebar | A wider band is sharp; the far edge and near edge stay soft |
+| Wide | 0.8–1.1× | The payoff only: the whole window, near-frontal, with content scrolling or changing | Mostly sharp; the frame edges still soften |
 
-Macro shots must stay crisp. Rasterise the UI at the resolution of the magnification (for example 2.5×) before the camera scales it. Never upscale a 1× bitmap.
+Macro shots must stay crisp. Rasterise the UI at the resolution of the magnification (for example 6×) before the camera scales it. Never upscale a 1× bitmap.
 
-### Camera drift
+### Camera angle
 
-Each shot is one camera setup that interpolates **linearly** from a `from` pose to a `to` pose over its entire duration, and is cut mid-move. There is no easing, no keyframes inside a shot, and no handheld noise.
+This is the signature of the look. Except for the wide shot, the camera is **low and oblique**, looking across the UI plane:
 
-- **Push**: dolly in 6–12% of the camera distance over the shot. Pull-outs are rare.
-- **Slide**: drift 20–60 px of UI sideways, usually along the reading direction of the action.
-- **Turn**: start at yaw ±2–4°, pitch ±2–6°, and roll within ±0.6°, then drift about 1° toward frontal. Never go past about 6°. This is a near-frontal look. The tilt only hints that the UI is a physical plane.
-- **Perspective**: use a long lens, which means low distortion. A perspective distance about the frame width (1500–1800 px at 1080p) works well.
-- **Framing**: crop aggressively. Window edges, toolbars, and neighbouring panels run off the frame. The subject sits at centre or on a third, surrounded by near-black or soft-focus UI.
+- **Tilt the plane back** 30–50° (pitch), so the far side of the UI recedes and the near side looms.
+- **Rotate it in-plane** 10–20° before tilting, so lines of text run diagonally. Flip the sign between consecutive shots.
+- **Add a little yaw**, ±5–15°, so one side of the frame is closer than the other.
+- **Use a short-ish perspective** so the foreshortening is obvious: near text should be about 1.4–1.8× the size of far text in the same frame. A perspective distance of about 0.6–0.75× the frame width works (1100–1400 px at 1080p).
+- **The wide shot is the exception**: near-frontal, pitch 8–12°, no in-plane rotation, yaw within ±3°.
+- **Framing**: crop aggressively. The slab's edges run off frame or fall into black. Leave generous black: a quarter to a half of the frame is often the void, or UI so far out of focus that it reads as texture.
 
-## 3. Light and grade: one dark room
+### Camera move
 
-Every shot must look like it was filmed in the same room. Values are in [references/look.md](references/look.md).
+Each shot is one continuous move. It is **motivated**: the camera drifts toward where the next thing will appear.
 
-- **Stage**: near-black ink (`#060607`). Never pure black and never a gradient wallpaper.
-- **Key light**: a soft, warm radial pool from above the frame, tinted with the accent hue at about 12–16% alpha, using a screen blend.
-- **Vignette**: heavy and radial, about 55% black in the corners.
-- **The product is glass**: rounded corners, a 1 px inner hairline at about 9% white, a 1 px top inner highlight at about 12% white, and a deep, soft drop shadow.
-- **Luminance hierarchy**: dark chrome and bright content. A light document, canvas, or card inside a dark UI gives every shot a natural focal point.
-- **Anamorphic flare on every event**: clicks, things appearing, and completions each get a short horizontal streak with a hot core in the accent colour (screen blend, about 0.4 s decay). Keep it subtle, at 50–70% strength, and never a full-frame flash.
-- **Finish**: motion blur (180° shutter, 4+ sub-frames) and light film grain on the final render. These two do more for "cinematic" than any effect.
+- **Track** along the reading direction of the action: 3–10% of the frame width over a typical shot, up to 20–35% for a long pan along a diff or a document.
+- **Follow** content as it grows: when an answer streams downward, drift down with it; when a line is typed, drift with the caret.
+- **Push** gently, a 1–5% scale change over the shot. Pull-outs are rare.
+- **Turn** slightly, 0.5–4° of roll or yaw change over the shot.
+- **Speed**: constant (linear) velocity, or a short ease-out arrival over the first third that then continues at a slow constant drift. The camera never eases to a full stop and is still moving at the cut. No handheld noise, no shake.
+- **Rack focus** with the action: when attention moves from the typed line to the reply, or from a title to the body, slide the focal band there over 0.4–0.8 s.
+
+## 3. Light and grade: a black void
+
+Every shot must look like it was filmed on the same stage. Values are in [references/look.md](references/look.md).
+
+- **Stage**: true black around the product. No gradient wallpaper, no coloured haze, no floor.
+- **Subject light**: a soft, neutral pool centred on the subject, not the frame. The UI falls off to black within roughly a third of the frame width from the focal point. There is no coloured key light.
+- **Low key**: the average frame is very dark (about 7–10% luminance). Bright pixels are reserved for in-focus text and the product's own coloured UI. Anything bright and out of focus gets dimmed.
+- **The product is a dark slab**: its own chrome, rounded corners, and a faint 1 px edge highlight on panels. Keep the real UI faithful; do not restyle it.
+- **Colour belongs to the product**: status icons, diff greens and reds, a brand-coloured primary button. Add no accent of your own: no flares, no glows, no rings, no tinted light.
+- **Finish**: motion blur (180° shutter, 4+ sub-frames) and fine film grain on the final render. Together with the depth of field, these three do almost all the work.
 
 ## 4. Motion inside the shot
 
-- **Cursor**: quick and decisive, 0.4–0.9 s per move on a slight arc. It arrives, acts, and moves off the subject so the result is never covered. Clicks dip the pointer and ripple.
-- **Typing**: 12–14 characters per second, faster than real. Keep the text short.
-- **Appear**: pop in on a stiff, well-damped spring with a slight overshoot, or ease out over about 0.3 s. Nothing fades in slowly during the montage.
-- **Change**: content edits cross-dissolve *through blur*. The old state blurs to about 14 px and drifts up while the new state un-blurs into place. Values and bars move on a smooth ease-in-out.
-- **Resolve**: when something completes, an accent ring expands from it and fades over about 0.8 s on an ease-out expo.
-- **Impact**: the single biggest moment gets a short camera shake (amplitude about 0.15). Nothing else does.
+- **No cursor.** The UI acts on its own. A nav item highlights. A tab's selection pill slides over. A button depresses. A gutter control appears on a code line and the line highlights. If a click must read, show it through the control's own pressed or selected state.
+- **Typing**: 12–13 characters per second with a visible caret. Code identifiers and file references turn into inline chips as they are typed. On send, the composer clears and the message moves into the thread.
+- **Streaming**: generated text resolves line by line, top to bottom. Each line arrives as a fine stipple of dots that condenses into solid glyphs over about 0.5 s, staggered by about 0.1 s per line. Icons and avatars resolve the same way.
+- **Writing**: documents and diagrams build in order: a title, then a heading, then paragraphs; diagram nodes, then connectors drawing on, then labels.
+- **Scrolling**: in medium and wide shots, the content may scroll smoothly under a drifting camera. This is the second layer of motion, and it should feel like reading speed.
+- **Appear**: new panels and messages fade and rise slightly through a small blur on an ease-out of 0.3–0.5 s. Nothing pops with overshoot.
+- **No impact effects.** The payoff is shown by scale (the wide shot) and by the amount that changes, not by shake, flashes, or rings.
 
 ## 5. Ending: copy, then a still logo
 
-1. **Hard cut to black.** Set one centred line of about 66 px, weight 600, tracking −0.035em. The feature name has a bright vertical gradient (white to about 62% white). The tagline follows on the same line at 50% white. Words arrive one at a time, each un-blurring from about 14 px and rising about 16 px, staggered by about 0.07 s on an ease-out expo. Hold for about 3 s.
-2. **Hard cut on the bar to the logo lockup.** The logo is completely still: no entrance, no drift, no pulse. A faint warm bloom sits behind it.
-3. **Fade to black** over the last 1.5–2 s.
+1. **Leave the last UI shot** with a hard cut to black, or a quick 0.4 s blur-and-dim into black.
+2. **The copy**: one centred line on black, about 80–100 px at 1080p, weight 500, tracking about −0.02em, white. It arrives by un-blurring from about 16 px while fading up over 0.6–1 s. Either set the whole line at once, or set the product name first and then append the tagline on the same line, letting the line re-centre as it grows. A faint soft glow behind the type may settle away as it sharpens; nothing sweeps across it. Hold for 3–5 s.
+3. **The logo**: cut or short-dissolve (about 0.3 s) to the still logo, either the mark alone or mark and wordmark, about 110–120 px tall at 1080p, in plain white. It does not move, pulse, or glow. Hold it for 4–5 s and end the film on it.
 
 Add no CTA buttons, URL cards, or "available now" banners unless asked.
 
 ## 6. Sound
 
-There is **no music**: no score, no drone, no beat, no risers, no braams, and no tonal stings. The 120 BPM grid is only the edit's internal tempo. The soundtrack is quiet, tactile foley over near-silence.
+There is **no music**: no score, no drone, no beat, no risers, no braams, and no tonal stings. The soundtrack is quiet, tactile foley over near-silence.
 
-Every visible action gets a cue: a click, a soft key thock per typed character, a soft pop when something appears, and an airy whoosh on send. The payoff lands with a single low, dry impact under the camera shake. Completions get a short, soft tick. The copy and the logo play over silence, and the final fade is silent.
+Every visible action gets a cue: a soft key tick per typed character, a soft click when a tab or item is selected, a quiet whoosh on send, and a faint granular hiss under streaming text. The payoff gets no impact. The copy and the logo play over silence.
 
 ## Don't
 
@@ -104,25 +118,29 @@ These make a film look like a tutorial or a template:
 
 - Cold opens, title cards, or "Introducing…" and "New in…" screens before the action.
 - Keycap overlays, captions, callout arrows, or labels that explain the UI.
-- Dissolves or dips to black between montage shots. The montage uses hard cuts only.
-- Slow orbits, big 3D rotations, swooping fly-throughs, or a camera that eases to a stop.
-- Wide shots of the whole app during the montage. If the viewer has to search the frame, the shot is too wide.
-- More than one action per shot, or a wandering cursor.
-- Restyling the product's UI to look "cinematic". Keep the real UI faithful, and get the cinema from the camera and the light.
+- A visible mouse pointer driving the action, or a cursor travelling between targets.
+- Flat, frontal close-ups. Outside the wide payoff shot, the camera looks across the UI, not straight at it.
+- Everything in focus. If the frame has no bokeh, the shot is too wide or the focal band is too deep.
+- Dissolves or dips to black between UI shots. The UI shots use hard cuts only.
+- Fast moves, slow orbits, big 3D rotations, swooping fly-throughs, camera shake, or a camera that eases to a stop.
+- Cutting to a grid. Two-second shots back to back read as a sizzle reel; let process shots breathe.
+- Restyling the product's UI to look "cinematic". Keep the real UI faithful, and get the cinema from the camera, the focus, and the light.
+- Anamorphic flares, glow, accent rings, coloured key light, or any colour the product does not already have.
+- Light that moves across the frame: sheen bands, sweeps, or light bars travelling over the UI. The light follows the subject; it does not perform.
 - An animated logo reveal.
-- Light that moves across the frame: sheen bands, sweeps, or light bars travelling over the glass. The light is fixed; only the camera moves.
 - Music of any kind, including a score, a beat, a drone, risers, braams, or bells.
-- Several accent colours, gradient stages, or glow everywhere.
 
 ## 7. Verify like a DP
 
 Render a still at the middle of every shot, at each action's peak, at the payoff, and at the copy and logo frames. Judge each one as a frame grab from a film:
 
-- There is exactly one subject, and the eye lands on it in under half a second.
-- The subject is sharp, the background is soft or dark, and the crop is hard.
-- Text is legible at half resolution, and nothing important sits under the cursor.
-- Consecutive shots differ in scale or in yaw sign.
-- Every frame shares the same black level, light pool, and vignette.
+- There is exactly one sharp subject, and the eye lands on it in under half a second.
+- The focal band is thin, with both near and far bokeh, except in the wide shot.
+- The plane reads as tilted: text runs diagonally and visibly shrinks into the distance.
+- Text in focus is legible at half resolution.
+- At least a quarter of the frame is black or near-black.
+- Consecutive shots differ in scale or in the direction of the diagonal.
+- Every frame shares the same black level, neutral light pool, and grain.
 - Pick the strongest frame as the poster.
 
 Iterate until every still could be a screenshot in a launch post.
