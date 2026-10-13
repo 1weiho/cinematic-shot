@@ -42,20 +42,6 @@ A document or canvas inside it sits on its own shadow:
 box-shadow: 0 0 0 1px rgb(0 0 0 / 0.4), 0 20px 60px -10px rgb(0 0 0 / 0.6);
 ```
 
-## Sheen (a sweep on every cut)
-
-This is a 900 px wide, very tall band on the glass, rotated 18°. It starts about 0.6 s before each cut and travels about 300 px/s.
-
-```css
-background: linear-gradient(90deg,
-  transparent,
-  rgb(255 255 255 / 0.06) 45%,
-  rgb(255 255 255 / 0.11) 50%,
-  rgb(255 255 255 / 0.06) 55%,
-  transparent);
-mix-blend-mode: screen;
-```
-
 ## Anamorphic flare (on every event)
 
 The flare is drawn in screen space at the event's projected position. It has two layers, both using the screen blend:

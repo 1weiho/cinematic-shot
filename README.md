@@ -21,5 +21,5 @@ Ask your agent for a launch film, for example: "Make a cinematic launch video fo
 | Path | What |
 | --- | --- |
 | `skills/cinematic-shot/SKILL.md` | The method: story → shot list → light → motion → ending → sound → verification, plus what not to do. |
-| `skills/cinematic-shot/references/look.md` | Exact grade recipes: stage, key light, vignette, glass, sheen, anamorphic flare, depth of field, blur dissolve, outro type, render settings. |
+| `skills/cinematic-shot/references/look.md` | Exact grade recipes: stage, key light, vignette, glass, anamorphic flare, depth of field, blur dissolve, outro type, render settings. |
 | `skills/cinematic-shot/references/shot-list-example.md` | A 42 s shot list in the abstract: rhythm, scales, angles, and camera numbers to map onto any feature. |

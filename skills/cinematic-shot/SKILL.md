@@ -13,7 +13,7 @@ Read [references/look.md](references/look.md) for exact grade, glass, flare, dep
 
 ## The taste
 
-Dark room. One warm light from above. The product floats in it like a sheet of glass. The camera is close, closer than feels comfortable, so a single control, a single card, or a single line of text fills the frame. It never sits still and never moves much: a slow push of about 10%, with a degree or two of turn. Cuts land on the music. Each shot holds exactly one gesture, and its result stays up for a beat. One accent colour carries every highlight. Restraint everywhere else.
+Dark room. One warm light from above. The product floats in it like a sheet of glass. The camera is close, closer than feels comfortable, so a single control, a single card, or a single line of text fills the frame. It never sits still and never moves much: a slow push of about 10%, with a degree or two of turn. Cuts land on a steady beat grid, even though there is no music. Each shot holds exactly one gesture, and its result stays up for a beat. One accent colour carries every highlight. Restraint everywhere else.
 
 ## 1. Find the story before the shots
 
@@ -72,7 +72,6 @@ Every shot must look like it was filmed in the same room. Values are in [referen
 - **Vignette**: heavy and radial, about 55% black in the corners.
 - **The product is glass**: rounded corners, a 1 px inner hairline at about 9% white, a 1 px top inner highlight at about 12% white, and a deep, soft drop shadow.
 - **Luminance hierarchy**: dark chrome and bright content. A light document, canvas, or card inside a dark UI gives every shot a natural focal point.
-- **Sheen on every cut**: a faint diagonal specular band sweeps across the glass, starting just before each cut, so every shot opens with light moving.
 - **Anamorphic flare on every event**: clicks, things appearing, and completions each get a short horizontal streak with a hot core in the accent colour (screen blend, about 0.4 s decay). Keep it subtle, at 50–70% strength, and never a full-frame flash.
 - **Finish**: motion blur (180° shutter, 4+ sub-frames) and light film grain on the final render. These two do more for "cinematic" than any effect.
 
@@ -95,9 +94,9 @@ Add no CTA buttons, URL cards, or "available now" banners unless asked.
 
 ## 6. Sound
 
-The music is cinematic, not a dance groove. Use one chord per bar in a minor key: a sub drone, felt piano, a ticking clock on eighths, a muted ostinato, and soft toms. It starts with the first shot (no intro) and builds in layers across the montage. Every cut gets a soft low tap, so the edit breathes with the music.
+There is **no music**: no score, no drone, no beat, no risers, no braams, and no tonal stings. The 120 BPM grid is only the edit's internal tempo. The soundtrack is quiet, tactile foley over near-silence.
 
-Every visible action gets a quiet, tactile cue: a click, a soft key thock per typed character, a glassy pop when something appears, and an airy whoosh on send. Before the payoff, a filtered string bed rises, then a breath of near-silence, then the payoff lands with a braam, a low boom, and the camera shake. Completions get glassy bells. Under the copy, hold one chord with two sparse piano notes. The logo lands on the bar with one heavy low hit that rings out under the fade.
+Every visible action gets a cue: a click, a soft key thock per typed character, a soft pop when something appears, and an airy whoosh on send. The payoff lands with a single low, dry impact under the camera shake. Completions get a short, soft tick. The copy and the logo play over silence, and the final fade is silent.
 
 ## Don't
 
@@ -111,6 +110,8 @@ These make a film look like a tutorial or a template:
 - More than one action per shot, or a wandering cursor.
 - Restyling the product's UI to look "cinematic". Keep the real UI faithful, and get the cinema from the camera and the light.
 - An animated logo reveal.
+- Light that moves across the frame: sheen bands, sweeps, or light bars travelling over the glass. The light is fixed; only the camera moves.
+- Music of any kind, including a score, a beat, a drone, risers, braams, or bells.
 - Several accent colours, gradient stages, or glow everywhere.
 
 ## 7. Verify like a DP
