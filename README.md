@@ -2,6 +2,8 @@
 
 [![skills.sh](https://skills.sh/b/1weiho/cinematic-shot)](https://skills.sh/1weiho/cinematic-shot)
 
+https://github.com/user-attachments/assets/f75193c9-bb51-4a1a-87f8-b5041dd13715
+
 An agent skill for directing cinematic product launch films: a sequence of **hero shots**. Each shot is a steep, oblique close-up of real UI floating in black, with a razor-thin focal plane, a slow motivated camera drift, and UI that acts on its own, hard-cut on the action. The film ends on one line of copy and a still logo.
 
 The skill covers the **look and the edit**: story, shot list, shot scales, camera drift, light and grade, motion, ending, and sound direction. It works for any product and leaves the rendering stack to the agent.
