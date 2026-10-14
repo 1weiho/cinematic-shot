@@ -27,3 +27,9 @@ Ask your agent for a launch film, for example: "Make a cinematic launch video fo
 | `skills/cinematic-shot/SKILL.md` | The method: story → shot list → light → motion → ending → sound → verification, plus what not to do. |
 | `skills/cinematic-shot/references/look.md` | Exact recipes: camera angles and drift, optical depth of field, subject light, grade, streaming reveal, UI motion, outro type, logo, render settings. |
 | `skills/cinematic-shot/references/shot-list-example.md` | A 52 s shot list in the abstract: rhythm, scales, angles, and camera numbers to map onto any feature. |
+
+## Support
+
+If cinematic-shot has been useful to you, consider supporting development:
+
+<a href="https://buymeacoffee.com/1weiho"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" height="40"></a>
