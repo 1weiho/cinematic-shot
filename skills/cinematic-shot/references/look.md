@@ -73,25 +73,90 @@ blur(p)     = min(maxBlur, k * |depth(p) - depth(focus)|)
 
 ## Subject light
 
-A neutral pool that follows the subject's projected screen position, not the frame centre. Put it over the plane as a darkening layer:
+A neutral pool that follows the subject. A single screen-space radial gradient makes it look like a hole cut in a black overlay: always round, always the same, always centred on the same point. Four things make it read as light falling on the slab instead.
+
+### 1. Put the pool on the plane
+
+Light lands on the UI, so attach the pool to the plane and let the camera project it. Give the light layer the same size, `transform-origin`, and `transform` as `.plane`, and stack it above every depth-of-field copy:
 
 ```css
-background: radial-gradient(
-  ellipse 46% 58% at var(--sx) var(--sy),  /* the projected focal point */
-  transparent 0%,
-  rgb(0 0 0 / 0.35) 45%,
-  rgb(0 0 0 / 0.85) 80%,
-  #000 100%
-);
+.light {
+  position: absolute;
+  width: var(--ui-w); height: var(--ui-h);   /* the UI's own size */
+  transform-origin: var(--fx) var(--fy);
+  transform: /* identical to .plane */;
+  pointer-events: none;
+  background:
+    /* core: the hot spot, nudged toward the key */
+    radial-gradient(
+      ellipse var(--cw) var(--ch) at var(--kx) var(--ky),
+      transparent 0%, transparent 45%,
+      rgb(0 0 0 / 0.1) 70%, rgb(0 0 0 / 0.22) 100%
+    ),
+    /* spill: wide and soft, ending in black */
+    radial-gradient(
+      ellipse var(--sw) var(--sh) at var(--lx) var(--ly),
+      transparent 0%, transparent 15%, rgb(0 0 0 / 0.06) 30%,
+      rgb(0 0 0 / 0.22) 50%, rgb(0 0 0 / 0.5) 68%, rgb(0 0 0 / 0.82) 85%, #000 100%
+    );
+}
 ```
 
-Then add a frame vignette to keep the corners black:
+All positions and radii are in UI pixels. The tilt foreshortens the ellipse into an egg that falls off quickly toward the far edge and stretches toward the near edge, and the roll lays it along the text diagonal. Every shot gets a different shape for free, because every shot has a different camera.
+
+Make the pool longer along the line of action than across it: wide for a line of typing or a row, tall for a column that streams downward.
+
+| Shot | Spill radius on screen, along / across (share of frame width) | Core radius (share of spill) |
+|---|---|---|
+| Extreme macro | 0.32–0.38 / 0.20–0.25 | 0.35–0.45 |
+| Macro | 0.40–0.45 / 0.26–0.30 | 0.35–0.45 |
+| Medium | 0.48–0.55 / 0.32–0.38 | 0.40–0.50 |
+| Wide | 0.70–0.80 / 0.50–0.60 | no core; the light opens up |
+
+To get UI pixels, divide the on-screen radius by the magnification: at 4×, a 0.42 radius is `0.42 × 1920 / 4 ≈ 200` UI px. Check the result on screen and adjust, since the tilt compresses the across axis.
+
+### 2. Give it a direction
+
+A real fixture hangs off to one side. Offset the core (`--kx`, `--ky`) from the spill centre by 8–15% of the spill radius, toward the key. The two falloffs then stop being concentric: one side of the subject has a long, soft shoulder and the other drops off quickly.
+
+Put the key toward the far side of the slab and a little to one side, and flip that side whenever the roll flips sign, so the light direction alternates with the diagonal. Keep it fixed within a shot.
+
+The two layers stack multiplicatively (each passes `1 − alpha` of the light), which gives a hot spot with a gentle spill instead of one linear ramp to black. Keep at least five stops in the spill: three linear stops are what make a gradient read as CSS.
+
+### 3. Flag it, sometimes
+
+In about a third of the shots, cut one side of the pool with a soft straight edge, like a flag in front of the fixture:
+
+```css
+.flag {   /* full-frame, screen space, above the light layer */
+  background: linear-gradient(
+    var(--flag-angle),
+    transparent 0%, transparent var(--flag-at),
+    rgb(0 0 0 / 0.75) calc(var(--flag-at) + 20%)
+  );
+}
+```
+
+Place the edge 20–30% of the frame width from the subject, at least 25° off the text diagonal, with a 15–25% feather. The subject itself stays on the lit side. The flag rides with the pool, keeping the same offset from it as the camera drifts, so it never sweeps across the frame.
+
+### 4. Let it react to the action
+
+The light never performs, but it does respond:
+
+- **Trail the subject.** Drive the spill centre with a lagged copy of the subject's position, so the light arrives just after the subject, like a follow-spot operator. It never leads. To keep each frame a pure function of time, average the path over a short window: `light(t) = mean of subject(τ) for τ in [t − T, t]`, with `T` = 0.3–0.5 s and `τ` clamped to the start of the shot. The core follows the same lagged position, plus its offset.
+- **Follow the rack.** When focus racks to a new subject, the pool slides there too, through the same lag, so it lands slightly after the focus does.
+- **Open with the content.** When an answer streams in or a document writes itself, grow the spill radii 20–40% over the shot to keep the new lines lit, smoothed with the same window.
+- **Open up for the payoff.** The wide shot uses the widest, flattest pool in the film. The cut back to a close-up returns to a tight one, and that contrast is part of the release.
+
+### Frame vignette
+
+The vignette belongs to the lens, not the light, so it stays centred and constant. It only keeps the corners black:
 
 ```css
 background: radial-gradient(120% 95% at 50% 50%, transparent 50%, rgb(0 0 0 / 0.7) 100%);
 ```
 
-No colour goes into either layer.
+No colour goes into any of these layers.
 
 ## Grade
 
