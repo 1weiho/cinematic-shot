@@ -1,3 +1,5 @@
+<img width="2560" height="1080" alt="banner" src="https://github.com/user-attachments/assets/43beb43b-0e1c-4d8e-9922-2fe450fd5617" />
+
 # cinematic-shot
 
 [![skills.sh](https://skills.sh/b/1weiho/cinematic-shot)](https://skills.sh/1weiho/cinematic-shot)
