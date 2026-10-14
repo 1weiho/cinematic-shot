@@ -82,7 +82,7 @@ Each shot is one continuous move. It is **motivated**: the camera drifts toward 
 Every shot must look like it was filmed on the same stage. Values are in [references/look.md](references/look.md).
 
 - **Stage**: true black around the product. No gradient wallpaper, no coloured haze, no floor.
-- **Subject light**: a soft, neutral pool centred on the subject, not the frame. The UI falls off to black within roughly a third of the frame width from the focal point. There is no coloured key light.
+- **Subject light**: a soft, neutral pool on the subject, not the frame. The UI falls off to black within roughly a third of the frame width from the focal point. The pool lies *on the UI plane*, so the tilt foreshortens it and the roll lays it along the diagonal. It is longer along the line of action, has a hot spot nudged toward an off-axis key (the key side flips with the diagonal), and sometimes has one side cut by a soft flag. It trails the subject by a beat, slides with a rack focus, and opens up as content grows and at the payoff. It is never a centred circle that looks the same in every shot. There is no coloured key light.
 - **Low key**: the average frame is very dark (about 7–10% luminance). Bright pixels are reserved for in-focus text and the product's own coloured UI. Anything bright and out of focus gets dimmed.
 - **The product is a dark slab**: its own chrome, rounded corners, and a faint 1 px edge highlight on panels. Keep the real UI faithful; do not restyle it.
 - **Colour belongs to the product**: status icons, diff greens and reds, a brand-coloured primary button. Add no accent of your own: no flares, no glows, no rings, no tinted light.
@@ -127,6 +127,7 @@ These make a film look like a tutorial or a template:
 - Restyling the product's UI to look "cinematic". Keep the real UI faithful, and get the cinema from the camera, the focus, and the light.
 - Anamorphic flares, glow, accent rings, coloured key light, or any colour the product does not already have.
 - Light that moves across the frame: sheen bands, sweeps, or light bars travelling over the UI. The light follows the subject; it does not perform.
+- A light pool that is a screen-space circle, centred and identical in every shot. It reads as a black overlay with a hole in it, not as light on the slab.
 - An animated logo reveal.
 - Music of any kind, including a score, a beat, a drone, risers, braams, or bells.
 
@@ -140,7 +141,7 @@ Render a still at the middle of every shot, at each action's peak, at the payoff
 - Text in focus is legible at half resolution.
 - At least a quarter of the frame is black or near-black.
 - Consecutive shots differ in scale or in the direction of the diagonal.
-- Every frame shares the same black level, neutral light pool, and grain.
+- Every frame shares the same black level, neutral light, and grain, but the pool's shape changes with each camera: foreshortened, stretched along the action, and lit from one side.
 - Pick the strongest frame as the poster.
 
 Iterate until every still could be a screenshot in a launch post.
