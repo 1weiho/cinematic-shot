@@ -1,11 +1,11 @@
 ---
 name: cinematic-shot
-description: Shoot software UI like a film. A sequence of hero shots, each a steep, oblique, extreme close-up of the interface floating in black, with a razor-thin focal plane, a slow motivated camera drift, and UI that acts on its own, hard-cut on the action, ending on one line of copy and a still logo. Use when asked for a launch video, product film, feature trailer, teaser, promo clip, hero shot, or any "cinematic" footage of an app or UI. This skill covers camera, framing, light, and edit. It is stack-agnostic.
+description: Shoot software UI like a film. A sequence of hero shots, each a steep, oblique, extreme close-up of the interface floating on a stage (a black void for dark products, a high-key studio for light ones), with a razor-thin focal plane, a slow motivated camera drift, and UI that acts on its own, hard-cut on the action, ending on one line of copy and a still logo. Use when asked for a launch video, product film, feature trailer, teaser, promo clip, hero shot, or any "cinematic" footage of an app, UI, or website. This skill covers camera, framing, light, and edit. It is stack-agnostic.
 ---
 
 # Cinematic shot
 
-You are the director and the DP, not the motion designer. The film is a sequence of **hero shots**. Each one looks at a real piece of the product's UI from a steep, low angle, so close that the focal plane covers only a line or two of text and everything else melts into black. The camera drifts slowly toward where the next thing will happen. The UI does the work by itself: things get typed, streamed, selected, and written while we watch. Nothing explains itself with captions.
+You are the director and the DP, not the motion designer. The film is a sequence of **hero shots**. Each one looks at a real piece of the product's UI from a steep, low angle, so close that the focal plane covers only a line or two of text and everything else melts into bokeh. The camera drifts slowly toward where the next thing will happen. The UI does the work by itself: things get typed, streamed, selected, and written while we watch. Nothing explains itself with captions.
 
 This skill is about camera, framing, light, and the edit. Build the film with any rendering stack. Whatever you choose, make every frame a pure function of time, so the film renders deterministically and can take motion blur.
 
@@ -13,7 +13,12 @@ Read [references/look.md](references/look.md) for exact camera, depth-of-field, 
 
 ## The taste
 
-A black void. The product floats in it like a dark slab, tilted away from the camera, lit by a soft pool that follows whatever matters and lets everything else fall into black. The camera is low and close, looking *along* the UI rather than at it, so lines of text run diagonally across the frame and shrink into the distance. The focal plane is a thin band: one control, one line of typing, one row of a list is sharp, and the rest is soft bokeh. The camera never stops drifting and never moves fast. Shots are long enough to watch something happen. The only colour is the product's own. Restraint everywhere else.
+The product floats on a stage like a slab, tilted away from the camera, lit softly where it matters. The camera is low and close, looking *along* the UI rather than at it, so lines of text run diagonally across the frame and shrink into the distance. The focal plane is a thin band: one control, one line of typing, one row of a list is sharp, and the rest is soft bokeh. The camera never stops drifting and never moves fast. Shots are long enough to watch something happen. The only colour is the product's own. Restraint everywhere else.
+
+There are two stages, and the product's real theme picks one (section 2):
+
+- **Dark stage**: a black void. A dark slab, lit by a soft pool that follows whatever matters and lets everything else fall into black.
+- **Light stage**: a high-key studio. A white slab resting over a warm light-grey ground, separated from it by a soft cast shadow, with a gentle key on the subject and nothing falling to black. On white, the bokeh becomes a soft haze.
 
 ## 1. Find the story before the shots
 
@@ -24,7 +29,19 @@ Before planning a single camera, write down:
 - **The demo content**: concrete, believable data inside the UI, such as names, IDs, statuses, code, and short human-sounding text. Real-looking density is what makes a close-up beautiful. A list of twelve plausible issues reads as a product; three grey placeholders read as a mockup.
 - **One line of copy**: the product or feature name, then a tagline of five words or fewer.
 
-## 2. Write the shot list
+When you record the user's real website rather than a rebuild, build the story from what the real page actually animates (section 6), not from what a rebuild could fake.
+
+## 2. Pick the stage from the product's real theme
+
+Decide this before the shot list. "Keep the real UI faithful" outranks "dark slab".
+
+- **The product has a genuine dark theme**: use the **dark stage**.
+- **It is light only, or light is its primary identity**: use the **light stage**. Never fake a dark theme and never invert colours. A site's unused dark styles are not a dark theme: if forcing them breaks the page (white cards, invisible text), the product is light only.
+- **It has both themes**: ask the user, or follow their brand.
+
+Every shot in the film uses the same stage.
+
+## 3. Write the shot list
 
 Post the shot list before building, then keep going:
 
@@ -39,8 +56,8 @@ Rules:
 - **One idea per shot.** A shot can contain a short chain (type → send → the reply starts) only if the camera follows one continuous thread.
 - **Vary scale like an editor.** Extreme macros and macros dominate. Medium shots carry the longer process. Hold back the **wide shot** (the whole window, near-frontal) for the payoff, where it lands like a release. Return to a close-up after it.
 - **Alternate the diagonal.** If the text in one shot rises to the right, the next shot's text falls to the right, or the plane tilts the other way. Every cut should read as a new camera position.
-- **No continuity cursor.** The UI acts on its own (see section 4). The viewer never needs to follow a pointer between shots.
-- **Separate surfaces get separate setups.** When the story moves to another surface (a terminal, a phone, another app), give it its own slab in the same black void and hard-cut to it.
+- **No continuity cursor.** The UI acts on its own (see section 5). The viewer never needs to follow a pointer between shots.
+- **Separate surfaces get separate setups.** When the story moves to another surface (a terminal, a phone, another app), give it its own slab on the same stage and hard-cut to it.
 
 ### Shot scales
 
@@ -64,7 +81,7 @@ This is the signature of the look. Except for the wide shot, the camera is **low
 - **Add a little yaw**, ±5–15°, so one side of the frame is closer than the other.
 - **Use a short-ish perspective** so the foreshortening is obvious: near text should be about 1.4–1.8× the size of far text in the same frame. A perspective distance of about 0.6–0.75× the frame width works (1100–1400 px at 1080p).
 - **The wide shot is the exception**: near-frontal, pitch 8–12°, no in-plane rotation, yaw within ±3°.
-- **Framing**: crop aggressively. The slab's edges run off frame or fall into black. Leave generous black: a quarter to a half of the frame is often the void, or UI so far out of focus that it reads as texture.
+- **Framing**: crop aggressively. On the dark stage, the slab's edges run off frame or fall into black, and a quarter to a half of the frame is often the void, or UI so far out of focus that it reads as texture. On the light stage, the slab's edges run off frame or show as the page's real edge with its cast shadow on the ground; a crop edge must never show (see the light stage in [references/look.md](references/look.md)).
 
 ### Camera move
 
@@ -77,18 +94,31 @@ Each shot is one continuous move. It is **motivated**: the camera drifts toward 
 - **Speed**: constant (linear) velocity, or a short ease-out arrival over the first third that then continues at a slow constant drift. The camera never eases to a full stop and is still moving at the cut. No handheld noise, no shake.
 - **Rack focus** with the action: when attention moves from the typed line to the reply, or from a title to the body, slide the focal band there over 0.4–0.8 s.
 
-## 3. Light and grade: a black void
+## 4. Light and grade
 
-Every shot must look like it was filmed on the same stage. Values are in [references/look.md](references/look.md).
+Every shot must look like it was filmed on the same stage. Values for both stages are in [references/look.md](references/look.md).
+
+### Dark stage: a black void
 
 - **Stage**: true black around the product. No gradient wallpaper, no coloured haze, no floor.
 - **Subject light**: a soft, neutral pool on the subject, not the frame. The UI falls off to black within roughly a third of the frame width from the focal point. The pool lies *on the UI plane*, so the tilt foreshortens it and the roll lays it along the diagonal. It is longer along the line of action, has a hot spot nudged toward an off-axis key (the key side flips with the diagonal), and sometimes has one side cut by a soft flag. It trails the subject by a beat, slides with a rack focus, and opens up as content grows and at the payoff. It is never a centred circle that looks the same in every shot. There is no coloured key light.
 - **Low key**: the average frame is very dark (about 7–10% luminance). Bright pixels are reserved for in-focus text and the product's own coloured UI. Anything bright and out of focus gets dimmed.
-- **The product is a dark slab**: its own chrome, rounded corners, and a faint 1 px edge highlight on panels. Keep the real UI faithful; do not restyle it.
+- **The product is a dark slab**: its own chrome, rounded corners, and a faint 1 px edge highlight on panels.
+
+### Light stage: a high-key studio
+
+- **Ground**: a warm light grey, a little darker than the page, so the white slab separates from it. Never white, never black.
+- **The product is a white slab**: the page's real viewport with rounded corners, floating over the ground. A wide, soft cast shadow and a tight contact shadow under it make it read as an object in a studio.
+- **Subject light**: no pool mask and nothing falling to black. A soft key only: the slab darkens by at most about 12% away from the subject, along the same lagged, on-plane ellipse as the dark stage, but wider and with a long, gentle shoulder. The lens vignette is faint and goes toward grey. No flags.
+- **High key**: a mean luminance of about 75–90% is expected, not a fault. The page's white sits just below clipping. In-focus text is the product's own dark ink. Out-of-focus areas are not dimmed; on white, bokeh is a soft haze.
+
+### Both stages
+
+- **Keep the real UI faithful**: do not restyle it, recolour it, or swap its theme.
 - **Colour belongs to the product**: status icons, diff greens and reds, a brand-coloured primary button. Add no accent of your own: no flares, no glows, no rings, no tinted light.
 - **Finish**: motion blur (180° shutter, 4+ sub-frames) and fine film grain on the final render. Together with the depth of field, these three do almost all the work.
 
-## 4. Motion inside the shot
+## 5. Motion inside the shot
 
 - **No cursor.** The UI acts on its own. A nav item highlights. A tab's selection pill slides over. A button depresses. A gutter control appears on a code line and the line highlights. If a click must read, show it through the control's own pressed or selected state.
 - **Typing**: 12–13 characters per second with a visible caret. Code identifiers and file references turn into inline chips as they are typed. On send, the composer clears and the message moves into the thread.
@@ -98,15 +128,27 @@ Every shot must look like it was filmed on the same stage. Values are in [refere
 - **Appear**: new panels and messages fade and rise slightly through a small blur on an ease-out of 0.3–0.5 s. Nothing pops with overshoot.
 - **No impact effects.** The payoff is shown by scale (the wide shot) and by the amount that changes, not by shake, flashes, or rings.
 
-## 5. Ending: copy, then a still logo
+## 6. Recording the real site
 
-1. **Leave the last UI shot** with a hard cut to black, or a quick 0.4 s blur-and-dim into black.
-2. **The copy**: one centred line on black, about 80–100 px at 1080p, weight 500, tracking about −0.02em, white. It arrives by un-blurring from about 16 px while fading up over 0.6–1 s. Either set the whole line at once, or set the product name first and then append the tagline on the same line, letting the line re-centre as it grows. A faint soft glow behind the type may settle away as it sharpens; nothing sweeps across it. Hold for 3–5 s.
-3. **The logo**: cut or short-dissolve (about 0.3 s) to the still logo, either the mark alone or mark and wordmark, about 110–120 px tall at 1080p, in plain white. It does not move, pulse, or glow. Hold it for 4–5 s and end the film on it.
+When the user wants their real website rather than a rebuild, record the live page. This applies to both stages.
+
+- **Drive the live page** in a headless browser and record its own states: clicks, hovers, its CSS animations, and its JS-driven cycles.
+- **Make time deterministic.** Install the browser automation's fake clock before navigation, so JS timers and `requestAnimationFrame` follow it. Step every CSS animation and transition by hand each frame: take `document.getAnimations()`, pause each one, then set `currentTime += dt`. Every frame is then a pure function of time.
+- **Trigger interactions from page JS** with `element.click()`. The automation's own click helper waits on `requestAnimationFrame` and hangs under a fake clock.
+- **Clean the page first**: block analytics requests and dismiss announcement banners before recording.
+- **Trace JS-driven state cycles** under the fake clock. Find when each change happens after the page settles (for example, a status that flips from Idling to Scaling up about 11 s after settle), then add a lead so each change lands where the shot list needs it.
+- **Probe text positions** with a text-node `Range` search. `getBoundingClientRect` on selectors misses text split across nodes.
+- **Capture regions at any scale** with the Chrome DevTools Protocol: `Page.captureScreenshot` with `clip.scale` renders a region at the magnification you need without changing the device pixel ratio or firing resize events.
+
+## 7. Ending: copy, then a still logo
+
+1. **Leave the last UI shot** with a hard cut to the stage, or a quick 0.4 s blur-and-fade into it: to black on the dark stage, to the ground colour on the light stage.
+2. **The copy**: one centred line on the stage, about 80–100 px at 1080p, weight 500, tracking about −0.02em. White on the dark stage; the product's own dark ink on the light stage. It arrives by un-blurring from about 16 px while fading up over 0.6–1 s. Either set the whole line at once, or set the product name first and then append the tagline on the same line, letting the line re-centre as it grows. On the dark stage, a faint soft glow behind the type may settle away as it sharpens; on the light stage there is no glow. Nothing sweeps across it. Hold for 3–5 s.
+3. **The logo**: cut or short-dissolve (about 0.3 s) to the still logo, either the mark alone or mark and wordmark, about 110–120 px tall at 1080p. Plain white on the dark stage; the brand colour on the light stage. It does not move, pulse, or glow. Hold it for 4–5 s and end the film on it.
 
 Add no CTA buttons, URL cards, or "available now" banners unless asked.
 
-## 6. Sound
+## 8. Sound
 
 There is **no music**: no score, no drone, no beat, no risers, no braams, and no tonal stings. The soundtrack is quiet, tactile foley over near-silence.
 
@@ -125,13 +167,18 @@ These make a film look like a tutorial or a template:
 - Fast moves, slow orbits, big 3D rotations, swooping fly-throughs, camera shake, or a camera that eases to a stop.
 - Cutting to a grid. Two-second shots back to back read as a sizzle reel; let process shots breathe.
 - Restyling the product's UI to look "cinematic". Keep the real UI faithful, and get the cinema from the camera, the focus, and the light.
+- Forcing a dark theme onto a light-only product, or inverting its colours.
+- The black void or a black light pool on a light page. It reads as a black overlay with a hole cut in it.
+- Dimming bokeh on the light stage.
+- A light pool that is a screen-space circle, centred and identical in every shot. It reads as a black overlay with a hole in it, not as light on the slab.
 - Anamorphic flares, glow, accent rings, coloured key light, or any colour the product does not already have.
 - Light that moves across the frame: sheen bands, sweeps, or light bars travelling over the UI. The light follows the subject; it does not perform.
-- A light pool that is a screen-space circle, centred and identical in every shot. It reads as a black overlay with a hole in it, not as light on the slab.
 - An animated logo reveal.
 - Music of any kind, including a score, a beat, a drone, risers, braams, or bells.
 
-## 7. Verify like a DP
+## 9. Preview, then verify like a DP
+
+Before any full-quality render, render a lightweight preview (960 × 540, 30 fps, 2 motion-blur sub-frames, half capture scale), show it to the user, and wait for their OK.
 
 Render a still at the middle of every shot, at each action's peak, at the payoff, and at the copy and logo frames. Judge each one as a frame grab from a film:
 
@@ -139,9 +186,16 @@ Render a still at the middle of every shot, at each action's peak, at the payoff
 - The focal band is thin, with both near and far bokeh, except in the wide shot.
 - The plane reads as tilted: text runs diagonally and visibly shrinks into the distance.
 - Text in focus is legible at half resolution.
-- At least a quarter of the frame is black or near-black.
 - Consecutive shots differ in scale or in the direction of the diagonal.
-- Every frame shares the same black level, neutral light, and grain, but the pool's shape changes with each camera: foreshortened, stretched along the action, and lit from one side.
+- Every frame shares the same stage, neutral light, and grain, but the light's shape changes with each camera: foreshortened, stretched along the action, and lit from one side.
+- On the **dark stage**:
+  - at least a quarter of the frame is black or near-black;
+  - the average frame luminance is about 7–10%.
+- On the **light stage**:
+  - the slab reads as an object: an edge or its shadow is visible in most shots, except extreme macros;
+  - no crop seams show;
+  - the subject is the brightest, crispest area;
+  - the mean luminance is high-key, not grey-washed: text contrast is still strong.
 - Pick the strongest frame as the poster.
 
 Iterate until every still could be a screenshot in a launch post.
