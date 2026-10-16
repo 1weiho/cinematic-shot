@@ -1,6 +1,6 @@
 # Shot list example
 
-This is a 52 s film, written in the abstract so it maps onto any feature. Replace each subject with the real piece of UI. Keep the rhythm, scales, and angles.
+This is a 52 s film, written in the abstract so it maps onto any feature. Replace each subject with the real piece of UI. Keep the rhythm, scales, and angles. It is shot on the dark stage; on the light stage, read "Black" as the ground colour.
 
 The story shape is:
 
