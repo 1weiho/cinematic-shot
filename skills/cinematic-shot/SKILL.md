@@ -1,6 +1,6 @@
 ---
 name: cinematic-shot
-description: Shoot software UI like a film. A sequence of hero shots, each a steep, oblique, extreme close-up of the interface floating on a stage (a black void for dark products, a high-key studio for light ones), with a razor-thin focal plane, a slow motivated camera drift, and UI that acts on its own, hard-cut on the action, ending on one line of copy and a still logo. Use when asked for a launch video, product film, feature trailer, teaser, promo clip, hero shot, or any "cinematic" footage of an app, UI, or website. This skill covers camera, framing, light, and edit. It is stack-agnostic.
+description: Shoot software UI like a film. A sequence of hero shots, each a steep, oblique, extreme close-up of the interface floating on a stage (a black void for dark products, a high-key studio for light ones), with a razor-thin focal plane, a slow motivated camera drift, and UI that acts on its own, hard-cut on the action, ending on one line of copy and a still logo. It also shoots stills: the same look frozen into single photographs. Use when asked for a launch video, product film, feature trailer, teaser, promo clip, hero shot, or any "cinematic" footage of an app, UI, or website, and also for a hero image, key visual, product photo, poster frame, launch-post image, Open Graph or social card, or any "cinematic" still of a UI. This skill covers camera, framing, light, and edit. It is stack-agnostic.
 ---
 
 # Cinematic shot
@@ -9,7 +9,9 @@ You are the director and the DP, not the motion designer. The film is a sequence
 
 This skill is about camera, framing, light, and the edit. Build the film with any rendering stack. Whatever you choose, make every frame a pure function of time, so the film renders deterministically and can take motion blur.
 
-Read [references/look.md](references/look.md) for exact camera, depth-of-field, light, reveal, and type recipes. Read [references/shot-list-example.md](references/shot-list-example.md) for a full example of the shot grammar.
+The same camera also takes **stills**: single photographs of the UI in the same look, for a hero image, a launch post, a social card, or a poster. When the user asks for images rather than a film, read section 10 first; it says which parts of the method carry over and what changes when nothing moves.
+
+Read [references/look.md](references/look.md) for exact camera, depth-of-field, light, reveal, type, and still recipes. Read [references/shot-list-example.md](references/shot-list-example.md) for a full example of the shot grammar and a still set.
 
 ## The taste
 
@@ -199,3 +201,78 @@ Render a still at the middle of every shot, at each action's peak, at the payoff
 - Pick the strongest frame as the poster.
 
 Iterate until every still could be a screenshot in a launch post.
+
+## 10. Stills: the static shot
+
+A still is one frame of the film, taken by a photographer instead of a DP. Everything that makes the film look the way it does still applies: the stage, the oblique camera, the thin focal plane, the light on the plane, the grade, the grain, and the faithful UI. What is gone is time, so the frame must do alone what the drift, the cut, and the rack focus did together.
+
+Shoot stills when the user asks for images: a hero image, a key visual, a launch-post image, an Open Graph or social card, a poster, or a set of product photos. When they ask for a film, still offer the poster frame (section 9) as a still. Never export a film frame as the still: it carries motion blur and the film's resolution. Re-render that instant as a still, by this section's rules.
+
+### What carries over, and what changes
+
+| Part of the method | In a still |
+|---|---|
+| Story (section 1) | Still needed, shorter: the payoff and the demo content. Each still shows one moment of the flow. |
+| Stage (section 2) | Unchanged. Every still in a set uses the same stage. |
+| Shot list (section 3) | Becomes a **still list** (below). Scale, angle, and the alternating diagonal still apply; length, cuts, and the camera move do not. |
+| Camera move | None. The camera is frozen, so composition leads the eye instead (below). |
+| Rack focus | None. One focal band, placed on the subject. |
+| Subject light (section 4) | Still on the plane, with an off-axis key. No lag: centre the spill on the subject, plus the key offset. Flags are welcome on the dark stage; a still can carry a stronger graphic shape. |
+| Motion (section 5) | A **frozen moment** (below), never a static screenshot. |
+| Motion blur | None. Supersample instead, so edges stay clean (see Stills in [references/look.md](references/look.md)). |
+| Grain | Yes, static and lighter than the film's, since it does not move to hide. |
+| Ending, logo, sound (sections 7–8) | None, unless the user asks for copy or a logo on the image. |
+
+### Write the still list
+
+Post it before rendering, then keep going:
+
+| # | Format | Subject (what is in focus) | Scale | Angle | Frozen moment | Negative space |
+|---|---|---|---|---|---|---|
+
+- **One still**: make it the payoff, at macro or medium scale, unless the user asks for the whole product. A single still has nothing to contrast with, so a wide near-frontal frame reads as a screenshot.
+- **A set** (3–6 stills): vary scale like the film does, flip the diagonal between neighbours, and allow at most one wide frame. A set should read as one shoot: same stage, same grade, same grain.
+- **Format first.** The format decides the composition, so pick it before the angle. Common formats and sizes are in [references/look.md](references/look.md). Never crop one frame into another format afterwards: reframe the camera for each format, because a crop moves the subject off its third and can cut the diagonal.
+
+### Compose the frame
+
+Without a moving camera, the frame has to point at the subject on its own:
+
+- **Put the subject on a third**, near one of the four intersections, never dead centre. The extreme macro is the exception: a single word or control may sit near the centre if the diagonal runs through it.
+- **Let the diagonal lead in.** Lines of text should enter from one corner and run toward the subject, so the eye slides along them and lands on the sharp band.
+- **Leave negative space** on the far side of the subject: a third to a half of the frame. On the dark stage it is the void; on the light stage it is soft haze or the ground. If the user wants copy or a logo on the image, it goes there, never over the UI.
+- **Near and far bokeh both show.** A still is judged longer than a frame of film, so a frame with bokeh on only one side looks flat.
+- **Crop for the format's safe area.** For social cards, keep the subject and any copy inside the central 80% of the frame, because platforms crop the edges.
+
+### Freeze a moment, not a state
+
+A still of a UI at rest looks like a screenshot. Pick the frame where the product is visibly doing something, at a point that reads as deliberate, not as a glitch:
+
+- **Reads as a moment**: a caret mid-line with part of a prompt typed; the last one or two lines of a reply still resolving out of the stipple while the lines above are solid; a selection pill just landed on its tab; a button in its own pressed colour; a diagram connector half drawn.
+- **Reads as a glitch**: a panel caught mid-fade or mid-blur in the Appear recipe; a selection pill halfway between two tabs; a scroll caught mid-ease; a whole block of text half stippled at once.
+
+When recording a real site (section 6), seek the fake clock to the chosen moment, step the page's animations to it, and capture once.
+
+### Render and deliver
+
+- **Render each still once at 2× and downsample** to the delivery size; this replaces motion blur as the anti-aliasing. Capture the UI at the still's magnification times two, as in section 3.
+- **Add grain last**, after the downsample and right before writing the delivery file, so it also dithers the dark gradients of the pool. Without it, the dark stage bands.
+- **Show a contact sheet first.** Before full resolution, render every still at a quarter size on one sheet and wait for the user's OK, as with the film preview.
+- **Deliver lossless PNG**, plus a JPEG without chroma subsampling (or a lossless WebP) for the web when asked, so the product's coloured text stays crisp.
+
+### Verify each still
+
+Use the checks in section 9, minus the ones about motion and cuts, plus:
+
+- The eye lands on the subject in under half a second, with no camera move to lead it there.
+- The subject sits on a third, and the diagonal leads into it.
+- The frozen moment reads as intended, not as a dropped frame.
+- There is no visible crop edge, banding in the dark gradients, or chroma smear on coloured text.
+- In a set, the stills could hang together: the same stage, grade, and grain, with different scales and diagonals.
+
+Don't, in a still:
+
+- Take a frontal screenshot and blur its edges. That is a vignette, not depth of field.
+- Fake motion with streaks, speed lines, or a directional blur. A still is frozen.
+- Add device frames, browser chrome the product does not have, reflections, or a floor, unless the user asks.
+- Put copy over the UI, or put more than one line of it on the image.
