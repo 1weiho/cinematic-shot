@@ -204,9 +204,11 @@ Iterate until every still could be a screenshot in a launch post.
 
 ## 10. Stills: the static shot
 
-A still is one frame of the film, taken by a photographer instead of a DP. Everything that makes the film look the way it does still applies: the stage, the oblique camera, the thin focal plane, the light on the plane, the grade, the grain, and the faithful UI. What is gone is time, so the frame must do alone what the drift, the cut, and the rack focus did together.
+A still is shot on the same set as the film, by a photographer instead of a DP. The stage, the oblique view, the shallow focus, the light on the plane, the grade, the grain, and the faithful UI all carry over. The film's camera does not.
 
-Shoot stills when the user asks for images: a hero image, a key visual, a launch-post image, an Open Graph or social card, a poster, or a set of product photos. When they ask for a film, still offer the poster frame (section 9) as a still. Never export a film frame as the still: it carries motion blur and the film's resolution. Re-render that instant as a still, by this section's rules.
+**A still is not a frame of the film.** The film's camera is built to move: a short lens, a plane rotated in its own surface and yawed, a subject half off the frame, and a focal band that crosses the subject. In motion, each of those resolves a moment later: the drift reveals what was cut, the rack finds the focus. Frozen, nothing resolves, so a film frame reads as a grab of a camera passing by. A still is composed from scratch for the one frame: a longer lens, a level camera rolled as a whole, one complete subject that is entirely sharp, a real edge of the object, and calm negative space. It has to do alone what the drift, the cut, and the rack did together.
+
+Shoot stills when the user asks for images: a hero image, a key visual, a launch-post image, an Open Graph or social card, a poster, or a set of product photos. When they ask for a film, still offer the poster frame (section 9) as a still. Never export a film frame as the still: it carries motion blur, the film's resolution, and a camera built to move. Re-shoot that moment as a still, with its own camera and composition, by this section's rules.
 
 ### What carries over, and what changes
 
@@ -214,9 +216,10 @@ Shoot stills when the user asks for images: a hero image, a key visual, a launch
 |---|---|
 | Story (section 1) | Still needed, shorter: the payoff and the demo content. Each still shows one moment of the flow. |
 | Stage (section 2) | Unchanged. Every still in a set uses the same stage. |
-| Shot list (section 3) | Becomes a **still list** (below). Scale, angle, and the alternating diagonal still apply; length, cuts, and the camera move do not. |
+| Shot list (section 3) | Becomes a **still list** (below). Scale variety and the alternating diagonal still apply; length, cuts, and the camera move do not. |
+| Camera angle | **Re-set for the still** (below): a longer lens, the diagonal from camera roll instead of in-plane roll, no yaw by default. Values are in Stills in [references/look.md](references/look.md). |
 | Camera move | None. The camera is frozen, so composition leads the eye instead (below). |
-| Rack focus | None. One focal band, placed on the subject. |
+| Rack focus | None. The sharp zone is fitted to the whole subject, then falls off fast. |
 | Subject light (section 4) | Still on the plane, with an off-axis key. No lag: centre the spill on the subject, plus the key offset. Flags are welcome on the dark stage; a still can carry a stronger graphic shape. |
 | Motion (section 5) | A **frozen moment** (below), never a static screenshot. |
 | Motion blur | None. Supersample instead, so edges stay clean (see Stills in [references/look.md](references/look.md)). |
@@ -234,15 +237,34 @@ Post it before rendering, then keep going:
 - **A set** (3–6 stills): vary scale like the film does, flip the diagonal between neighbours, and allow at most one wide frame. A set should read as one shoot: same stage, same grade, same grain.
 - **Format first.** The format decides the composition, so pick it before the angle. Common formats and sizes are in [references/look.md](references/look.md). Never crop one frame into another format afterwards: reframe the camera for each format, because a crop moves the subject off its third and can cut the diagonal.
 
+### Set the photographer's camera
+
+Re-set the camera for each still. Never reuse a shot's film camera:
+
+- **A longer lens.** Use a perspective distance of about 2–2.4× the frame width (the film uses 0.6–0.75×), like a product photographer's short telephoto. Get the tilt from pitch instead of from a wide lens: near text is about 1.2–1.4× the size of far text, not 1.4–1.8×. A short lens in a still looks like a camera sweeping past.
+- **Level the plane, then roll the camera.** Put the diagonal into a camera roll of 6–10°, which rotates the whole frame, and leave the UI unrotated on its plane. Keep yaw at 0. The sharp band then runs *along* the lines of text, so a whole word, line, or headline is sharp at once. With the film's in-plane roll, the band crosses the line and half the subject melts, which reads as focus still racking.
+- **The exception is one compact control**, such as a tile, a button, or a badge. There, roll the plane 12–16° so a row of its neighbours recedes along the diagonal into the blur.
+- **Use yaw only to separate.** When a neighbour at the same depth as the subject would be just as sharp (the next card in a grid, the same row in another panel), yaw up to about 10° to push it back into the blur, or reframe it out of the shot. Never yaw for drama.
+
 ### Compose the frame
 
 Without a moving camera, the frame has to point at the subject on its own:
 
+- **One whole subject.** The sharp subject is a complete unit: a whole word, a headline with its avatar, a whole list, or a whole control. It sits entirely inside the frame, at least 8% of the frame height from every edge. In-focus text never touches or crosses a frame edge; only blurred text may run off.
+- **Fit the focus to the subject.** Make the sharp zone exactly as deep as the subject, so every corner of it is sharp, then let blur rise steeply outside it: the next line beyond the subject is already visibly soft, and the far third of the frame reaches the maximum blur. A fixed thin band either cuts the subject or, widened to cover it, sharpens the whole frame.
+- **Show the object.** Let one real edge enter the frame: the slab's edge with its cast shadow on the light stage, or the subject's own card or panel. The edge makes the UI an object on a set and gives the frame a structural line. It leaves the frame well away from a corner, and it never runs along a frame edge or just touches one (a tangent).
+
 - **Put the subject on a third**, near one of the four intersections, never dead centre. The extreme macro is the exception: a single word or control may sit near the centre if the diagonal runs through it.
 - **Let the diagonal lead in.** Lines of text should enter from one corner and run toward the subject, so the eye slides along them and lands on the sharp band.
-- **Leave negative space** on the far side of the subject: a third to a half of the frame. On the dark stage it is the void; on the light stage it is soft haze or the ground. If the user wants copy or a logo on the image, it goes there, never over the UI.
+- **Leave negative space** on the far side of the subject: a third to a half of the frame. On the dark stage it is the void; on the light stage it is soft haze, clean slab, or the ground. If the user wants copy or a logo on the image, it goes there, never over the UI.
+- **Keep the negative space calm.** Half-legible bands of text, a dark card cut by the frame edge, or a sharp neighbour at the edge all pull the eye away. Reframe, push in, or yaw until they are gone or deep in the blur.
+- **Dress the set.** What motion forgives, a still shows. If a translucent overlay (a backdrop-blurred menu, a sheet) smears the content behind it into stains, scroll to an empty part of the page or hide that content for the capture. Never change the subject itself.
 - **Near and far bokeh both show.** A still is judged longer than a frame of film, so a frame with bokeh on only one side looks flat.
 - **Crop for the format's safe area.** For social cards, keep the subject and any copy inside the central 80% of the frame, because platforms crop the edges.
+
+### Bracket, then choose
+
+A photographer does not take one frame. Before the contact sheet, render a framing pass for each still at a quarter size: 6–9 variants that differ in magnification, the subject's position, and the camera roll. Pick the one that passes the checks below, and show the user only the chosen frames.
 
 ### Freeze a moment, not a state
 
@@ -264,7 +286,11 @@ When recording a real site (section 6), seek the fake clock to the chosen moment
 
 Use the checks in section 9, minus the ones about motion and cuts, plus:
 
-- The eye lands on the subject in under half a second, with no camera move to lead it there.
+- The eye lands on the subject in under half a second, with no camera move to lead it there. At a tenth of the size, the subject still reads as a shape.
+- The whole subject is sharp, and every edge of it is inside the frame with margin. No in-focus text touches a frame edge.
+- One real edge of the slab or of the subject's own card is in frame, without a tangent.
+- The negative space is calm: no sharp neighbour, dark mass, or half-legible text at the frame edges.
+- It does not look like a frame from the film: no short-lens sweep, no band crossing the subject, nothing caught on its way into the frame.
 - The subject sits on a third, and the diagonal leads into it.
 - The frozen moment reads as intended, not as a dropped frame.
 - There is no visible crop edge, banding in the dark gradients, or chroma smear on coloured text.
@@ -272,6 +298,8 @@ Use the checks in section 9, minus the ones about motion and cuts, plus:
 
 Don't, in a still:
 
+- Export, or re-render, a film shot's camera as the still. Re-set the camera and compose the frame for it.
+- Cut the subject with the frame edge, or let the focal band cross it.
 - Take a frontal screenshot and blur its edges. That is a vignette, not depth of field.
 - Fake motion with streaks, speed lines, or a directional blur. A still is frozen.
 - Add device frames, browser chrome the product does not have, reflections, or a floor, unless the user asks.

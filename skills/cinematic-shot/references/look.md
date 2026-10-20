@@ -330,7 +330,7 @@ Use the mark alone, or the mark with the wordmark. The mark is about 115 px tall
 
 ## Stills
 
-A still uses every recipe above, frozen at one moment. Only what follows changes.
+A still uses the stage, light, grade, reveal, and type recipes above, frozen at one moment. It does **not** use the film's camera: a still gets its own camera and focus, below.
 
 ### Formats
 
@@ -342,15 +342,54 @@ Pick the format before the angle, and reframe the camera for each one instead of
 | Banner (21:9 or 2:1) | 2560 × 1080, or 2560 × 1280 | 2× | Room for a long diagonal; a long track along a row reads well. |
 | Open Graph / social card (1.91:1) | 1200 × 630 | 2400 × 1260 | Keep subject and copy inside the central 80%. Text in focus at least 40 px tall, since it is viewed small. |
 | Square | 1080 × 1080 | 2160 × 2160 | Steeper pitch (add 5°) so the plane still reads as tilted in a short frame. |
-| Portrait (4:5) | 1080 × 1350 | 2160 × 2700 | Let the diagonal run more vertically: roll ±20–30° instead of ±10–20°. |
+| Portrait (4:5) | 1080 × 1350 | 2160 × 2700 | Let the diagonal run more vertically: camera roll ±12–18° instead of ±6–10°. |
 
 Pixel values elsewhere in this file assume a 1080 px frame height; scale them with the delivery height, then double them for the 2× render.
 
-### Camera and focus
+### Camera
 
-- Use the camera table above unchanged. Take the magnification, pitch, and roll from the middle of a shot's range, not its edges: there is no drift to make an extreme angle feel motivated.
-- No drift, no push, no turn. One transform per still.
-- One focal band, on the subject. Use the depth-of-field table above; for an extreme macro, the narrow end of the sharp band (4–5%) reads best in a still.
+Add a camera roll after the perspective tilt, so the whole frame rotates and the plane stays level on itself:
+
+```css
+.camera { perspective: var(--p); perspective-origin: var(--sx) var(--sy); }  /* origin on the subject */
+.frame  { transform: rotate(var(--camroll)); transform-origin: var(--sx) var(--sy); }
+
+.plane {
+  transform-origin: var(--fx) var(--fy);   /* the subject's centre, in UI pixels */
+  transform:
+    rotateX(var(--pitch))
+    rotateY(var(--yaw))                    /* 0 unless separating a neighbour */
+    rotateZ(var(--roll))                   /* 0 unless the subject is one compact control */
+    scale(var(--mag));
+}
+```
+
+Put the perspective origin on the subject (a lens shift), not at the frame centre, so the subject's own geometry stays clean wherever it sits in the frame.
+
+| Still | `--mag` | `--pitch` | `--camroll` | `--roll` | `--yaw` | Perspective |
+|---|---|---|---|---|---|---|
+| A group: a headline with its avatar, a card, a short list | 2–3 | 28–34° | ±6–10° | 0 | 0 | 2.0–2.2× frame width |
+| A detail: a code hunk, a list of routes, a nav word | 2.6–3.6 | 32–38° | ±6–10° | 0 | 0, or up to ±10° to separate a neighbour | 2.2× |
+| One compact control: a tile, a button, a badge | 3.5–4.5 | 38–42° | 0 | ±12–16° | 0, or ±5° | 2.0× |
+| Wide (avoid in a single still) | 0.9–1.1 | 10–14° | ±3° | 0 | 0 | 2.4× |
+
+Check the result: near text is about 1.2–1.4× the size of far text, the subject's text lines run straight along the diagonal, and the frame does not look like it is swinging past. No drift, no push, no turn: one transform per still.
+
+### Focus
+
+Fit the sharp zone to the whole subject, then fall off fast. Measure defocus as the relative distance to the focal plane, the way a lens does:
+
+```
+coc(p)      = |dist(p) - dist(focus)| / dist(p)       # dist = distance from the camera
+coc_subject = max coc over the subject's four corners
+blur(p)     = min(maxBlur, k * max(0, coc(p) - coc_subject))
+```
+
+- Every corner of the subject is sharp (blur 0).
+- Choose `k` so that the next line beyond the subject is already soft, about 2–4 px, and the far third of the frame reaches `maxBlur`. Use the `maxBlur` values from the depth-of-field table above.
+- Never widen a fixed band to cover the subject: it sharpens the whole frame and the bokeh is gone.
+
+With camera roll and no in-plane roll, the lines of equal depth run along the text, so a whole line, word, or headline fits in the sharp zone however wide it is.
 
 ### Light
 
