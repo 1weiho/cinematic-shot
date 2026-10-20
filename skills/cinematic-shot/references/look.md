@@ -328,6 +328,74 @@ For the name-then-tagline variant, set the name, hold it for about 1.5 s, then f
 
 Use the mark alone, or the mark with the wordmark. The mark is about 115 px tall, the gap to the wordmark about 0.4× the mark height, and the wordmark the size of the outro type. On the dark stage, plain white. On the light stage, the brand colour (for example, Laravel red `#F53003` for both mark and wordmark) on the ground colour. No bloom and no glow. Cut or dissolve (0.3 s) to it, hold it completely still for 4–5 s, and end the film on it.
 
+## Stills
+
+A still uses every recipe above, frozen at one moment. Only what follows changes.
+
+### Formats
+
+Pick the format before the angle, and reframe the camera for each one instead of cropping. Render at 2× and deliver at 1×.
+
+| Use | Delivery size | Render at | Composition notes |
+|---|---|---|---|
+| Hero / key visual (16:9) | 1920 × 1080, or 3840 × 2160 for print and retina | 3840 × 2160, or 7680 × 4320 | The default. Subject on a third, negative space opposite. |
+| Banner (21:9 or 2:1) | 2560 × 1080, or 2560 × 1280 | 2× | Room for a long diagonal; a long track along a row reads well. |
+| Open Graph / social card (1.91:1) | 1200 × 630 | 2400 × 1260 | Keep subject and copy inside the central 80%. Text in focus at least 40 px tall, since it is viewed small. |
+| Square | 1080 × 1080 | 2160 × 2160 | Steeper pitch (add 5°) so the plane still reads as tilted in a short frame. |
+| Portrait (4:5) | 1080 × 1350 | 2160 × 2700 | Let the diagonal run more vertically: roll ±20–30° instead of ±10–20°. |
+
+Pixel values elsewhere in this file assume a 1080 px frame height; scale them with the delivery height, then double them for the 2× render.
+
+### Camera and focus
+
+- Use the camera table above unchanged. Take the magnification, pitch, and roll from the middle of a shot's range, not its edges: there is no drift to make an extreme angle feel motivated.
+- No drift, no push, no turn. One transform per still.
+- One focal band, on the subject. Use the depth-of-field table above; for an extreme macro, the narrow end of the sharp band (4–5%) reads best in a still.
+
+### Light
+
+- **Dark stage**: the same two-layer pool on the plane, with the spill centred on the subject and the core offset 8–15% toward the key. There is no lag window. Use a flag in about half of the stills in a set rather than a third.
+- **Light stage**: the same soft key, centred on the subject. Still no flags.
+- The lens vignette is unchanged.
+
+### Frozen moment
+
+Seek every animation to one instant, the same way a film frame is a pure function of time:
+
+| Event | Frame to take |
+|---|---|
+| Typing | 60–80% of the prompt typed, caret solid, the last character just placed |
+| Streaming | All lines solid except the last one or two, which sit at `p` ≈ 0.4–0.7 in the stipple reveal |
+| Select | 0.1–0.2 s after the pill lands, the label at its active colour |
+| Press | At the bottom of the press (scale 0.97), showing the pressed colour |
+| Diagram drawing | Nodes in, one connector at 50–70% of its `stroke-dashoffset`, its label not yet in |
+| Document writing | The heading and first paragraphs solid, the next paragraph mid-stipple |
+
+Never freeze an Appear, a slide between two states, or a scroll mid-ease.
+
+### Render pipeline
+
+1. Capture the UI at the still's magnification × 2 (the 2× render), with the Detail and Context layers on the light stage as above.
+2. Composite stage, slab, depth of field, light, and vignette at the 2× size. No motion blur.
+3. Downsample to the delivery size with a Lanczos filter.
+4. Add static luma grain, about half the film's strength: `noise` strength about 2 on the dark stage and 1.5 on the light stage, on the luma plane only.
+5. Write lossless PNG. For the web, also write a JPEG at quality about 90 without chroma subsampling (4:4:4), or a lossless WebP; lossy WebP always subsamples chroma.
+
+With ffmpeg, steps 3–5 are:
+
+```bash
+ffmpeg -i still@2x.png \
+  -vf "scale=1920:1080:flags=lanczos,format=yuv444p,noise=c0s=2,format=rgb24" \
+  -frames:v 1 -update 1 still.png
+ffmpeg -i still.png -q:v 2 -pix_fmt yuvj444p -frames:v 1 -update 1 still.jpg
+```
+
+Grain is the last step before the delivery file is written, so it also dithers the pool's dark gradients. Without it, the dark stage shows banding.
+
+### Contact sheet
+
+Before the full-resolution render, render each still at a quarter of its delivery size, lay them out on one sheet in still-list order with their numbers, and show it to the user. Wait for their OK.
+
 ## Render
 
 | Setting | Value |
