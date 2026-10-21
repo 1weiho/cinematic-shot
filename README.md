@@ -8,7 +8,7 @@ https://github.com/user-attachments/assets/5eb24118-af70-4985-b558-aea73294e180
 
 An agent skill for directing cinematic product launch films: a sequence of **hero shots**. Each shot is a steep, oblique close-up of real UI floating on a stage (a black void for dark products, a high-key studio for light ones), with a razor-thin focal plane, a slow motivated camera drift, and UI that acts on its own, hard-cut on the action. The film ends on one line of copy and a still logo.
 
-It also shoots **stills**: the same look frozen into single photographs, for a hero image, a launch post, a social card, or a poster.
+It also shoots **stills**: the same look as single photographs, each composed for the one frame with its own camera rather than lifted from the film, for a hero image, a launch post, a social card, or a poster.
 
 The skill covers the **look and the edit**: story, stage, shot list, shot scales, camera drift, light and grade, motion, ending, and sound direction. For stills, it covers formats, composition, the frozen moment, and the render. It works for any product and leaves the rendering stack to the agent.
 
@@ -29,7 +29,7 @@ Or for stills: "Shoot a hero image and a social card of our new search feature."
 | Path | What |
 | --- | --- |
 | `skills/cinematic-shot/SKILL.md` | The method: story → stage → shot list → light → motion → recording a real site → ending → sound → preview and verification → stills, plus what not to do. |
-| `skills/cinematic-shot/references/look.md` | Exact recipes: dark and light stages, camera angles and drift, optical depth of field, subject light, crop layers, grade, streaming reveal, UI motion, outro type, logo, still formats and render pipeline, render settings. |
+| `skills/cinematic-shot/references/look.md` | Exact recipes: dark and light stages, camera angles and drift, optical depth of field, subject light, crop layers, grade, streaming reveal, UI motion, outro type, logo, still formats, still camera and focus, render pipeline, render settings. |
 | `skills/cinematic-shot/references/shot-list-example.md` | A 52 s shot list in the abstract: rhythm, scales, angles, and camera numbers to map onto any feature, plus a five-still set from the same story. |
 
 ## Support

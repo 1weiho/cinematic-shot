@@ -54,19 +54,22 @@ A 4% push from 2.8× to 2.9× takes `dist` from 464 to 448. With a strong pitch,
 
 ## A still set
 
-The same story, shot as five stills for a launch post: a hero image, three supporting stills, and a social card. Same stage, grade, and grain throughout. Angles are pitch / roll / yaw, as above.
+The same story, shot as five stills for a launch post: a hero image, three supporting stills, and a social card. Same stage, grade, and grain throughout. The film's cameras are not reused: each still gets the photographer's camera from Stills in [look.md](look.md), with a perspective of about 2–2.2× the frame width. Angles are pitch / camera roll / in-plane roll / yaw.
 
-| # | Format | Subject in focus | Mag. | Pitch / roll / yaw | Frozen moment | Negative space |
-|---|---|---|---|---|---|---|
-| 1 | 16:9 hero | The generated result, its first lines solid | 2.2× | 34° / +12° / −8° | The last two lines mid-stipple | Upper left, about 40% void |
-| 2 | 16:9 | The composer with a prompt being typed | 3.2× | 40° / −14° / +6° | Two-thirds typed, one identifier already a chip, caret solid | Lower right, flagged off |
-| 3 | 16:9 | One tab | 6.0× | 45° / +16° / −8° | The pill just landed, its label active | Most of the frame is bokeh |
-| 4 | 16:9 | The primary action button | 6.5× | 48° / −18° / +12° | At the bottom of the press, in its pressed colour | Flagged off on the left |
-| 5 | 1200 × 630 card | The best single line of the result | 3.0× | 38° / +12° / −8° | The line solid; the line below mid-stipple | Right third, holding the product name in outro type |
+| # | Format | Subject in focus (all of it sharp) | Mag. | Pitch / cam roll / roll / yaw | Frozen moment | Edge in frame | Negative space |
+|---|---|---|---|---|---|---|---|
+| 1 | 16:9 hero | The generated result's heading and first three lines | 2.4× | 32° / −8° / 0° / 0° | The last line mid-stipple | The panel's left edge | Upper right, clean panel falling into haze |
+| 2 | 16:9 | The composer, with the whole typed prompt | 3.0× | 34° / +8° / 0° / 0° | Two-thirds typed, one identifier already a chip, caret solid | The composer's rounded border | Lower left, the thread deep in the blur |
+| 3 | 16:9 | One tab, with its row of siblings receding | 4.2× | 40° / 0° / −14° / 0° | The pill just landed, its label active | The tab bar's bottom edge | Most of the frame is bokeh |
+| 4 | 16:9 | A list of four rows, as one card | 3.6× | 34° / −9° / 0° / −10° | The fourth row just resolved | The card's corner and its shadow | The slab beyond the card, the neighbouring card yawed into the blur |
+| 5 | 1200 × 630 card | The best single line of the result, with its label | 3.0× | 30° / −7° / 0° / 0° | The line solid; the line below mid-stipple | The slab's left edge and cast shadow | Right half, holding the product name in outro type |
 
 Why it works:
 
+- **No still is a film frame.** Every one has a longer lens, a level plane, and a whole subject inside the frame. Nothing looks caught on its way into the shot.
+- **The whole subject is sharp, and nothing else is.** Camera roll keeps each text line inside the sharp zone, and the zone stops right at the subject's edges.
+- **Each frame shows an object.** A real edge of a panel, a card, or the slab, with its shadow, gives the frame a structural line and makes the UI read as a thing on a set.
 - **The hero is the payoff**, at medium scale, not the whole window: a single still has no cut to make a wide frame land.
-- **Scale still varies** (medium, macro, extreme macro, extreme macro, macro), and the diagonal flips between neighbours, so the set reads as one shoot from several camera positions.
-- **Every still is a moment**: a reply generating, a prompt being typed, a tab just selected, a button pressed. None of them is the UI at rest.
+- **Scale still varies** (medium, macro, extreme macro, macro, macro), and the diagonal flips between neighbours, so the set reads as one shoot from several camera positions.
+- **Every still is a moment**: a reply generating, a prompt being typed, a tab just selected. None of them is the UI at rest.
 - **Copy appears once**, on the social card, in the negative space and never over the UI.
